@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,30 +12,8 @@ class UserController extends Controller
     // Menampilkan semua user
     public function index()
     {
-        $users = User::all();
+        $users = UserModel::all();
         return response()->json($users);
-    }
-
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        $token = $user->createToken('YourAppName')->plainTextToken;
-
-        return response()->json(['token' => $token]);
     }
 
     // Menambahkan user baru
@@ -49,7 +27,7 @@ class UserController extends Controller
             'phone_number' => 'nullable|string|max:15',
         ]);
 
-        $user = User::create([
+        $user = UserModel::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -62,7 +40,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = UserModel::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -73,7 +51,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = UserModel::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -101,7 +79,7 @@ class UserController extends Controller
     // Menghapus user
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = UserModel::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);

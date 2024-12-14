@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Approval extends Model
+class ApprovalModel extends Model
 {
     use HasFactory;
+    
+    protected $table = 'approval_logs';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'booking_id',
@@ -19,11 +22,11 @@ class Approval extends Model
 
     public function booking()
     {
-        return $this->belongsTo(Booking::class);
+        return $this->belongsTo(BookingModel::class, 'booking_id');
     }
 
     public function approver()
     {
-        return $this->belongsTo(User::class, 'approver_id');
+        return $this->belongsTo(UserModel::class, 'approver_id');
     }
 }
