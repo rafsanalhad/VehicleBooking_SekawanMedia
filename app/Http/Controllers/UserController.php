@@ -12,8 +12,8 @@ class UserController extends Controller
     // Menampilkan semua user
     public function index()
     {
-        $users = UserModel::all();
-        return response()->json($users);
+        $users = UserModel::with(['departments'])->get();
+        return view('admin/content/user', compact('users'));
     }
 
     // Menambahkan user baru

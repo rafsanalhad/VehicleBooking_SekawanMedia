@@ -22,7 +22,7 @@
                 @foreach($approvals as $approval)
                 <tr class="border-t">
                     <td class="p-3">{{ $approval->id }}</td>
-                    <td class="p-3">{{ $approval->approver->name }}</td>
+                    <td class="p-3">{{ $approval->userFromBooking->name }}</td>
                     <td class="p-3">{{ $approval->approver->type }}</td>
                     <td class="p-3">{{ $approval->approval_level }}</td>
                     <td class="p-3 text-yellow-600">{{ $approval->status }}</td>

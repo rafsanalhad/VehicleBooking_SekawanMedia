@@ -29,4 +29,9 @@ class ApprovalModel extends Model
     {
         return $this->belongsTo(UserModel::class, 'approver_id');
     }
+
+    public function userFromBooking()
+    {
+        return $this->booking->user();
+    }
 }
