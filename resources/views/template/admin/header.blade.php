@@ -34,10 +34,10 @@
                 <div class="p-4 text-lg font-bold text-center bg-gray-900">Admin Panel</div>
                 <nav class="mt-6">
                     <ul>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Dashboard</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Users</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Pengajuan</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Reports</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminDashboard')}}">Dashboard</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminUsers')}}">Users</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminBooking')}}">Booking List</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Approval List</a></li>
                     </ul>
                 </nav>
             </div>
