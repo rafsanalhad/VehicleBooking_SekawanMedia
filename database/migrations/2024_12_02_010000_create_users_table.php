@@ -18,9 +18,6 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'approver', 'user'])->default('user');
             $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
-            $table->integer('approval_level')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
         });
     }
 

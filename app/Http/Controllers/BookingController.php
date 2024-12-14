@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    public function create(Request $request)
+    public function createBooking(Request $request)
     {
         $validated = $request->validate([
             'vehicle_id' => 'required|exists:vehicles,id',
@@ -17,32 +17,37 @@ class BookingController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'purpose' => 'required|string',
-            'approver_ids' => 'required|array|min:2',
-            'approver_ids.*' => 'exists:users,id',
+            'approver_1' => 'required',
+            'approver_2' => 'required',
         ]);
 
         $booking = BookingModel::create([
             'vehicle_id' => $validated['vehicle_id'],
             'driver_id' => $validated['driver_id'],
-            'created_by' => auth()->id(),
+            'user_id' => $validated['user_id'],
             'approval_status' => 'pending',
             'start_date' => $validated['start_date'],
+            'approver_1' => $validated['approver_1'],
+            'approver_2' => $validated['approver_2'],
             'end_date' => $validated['end_date'],
             'purpose' => $validated['purpose'],
         ]);
 
-        foreach ($validated['approver_ids'] as $level => $approver_id) {
-            ApprovalModel::create([
-                'booking_id' => $booking->id,
-                'approver_id' => $approver_id,
-                'level' => $level + 1,
-                'status' => 'pending',
-            ]);
-        }
+        // foreach ($validated['approver_ids'] as $level => $approver_id) {
+        //     ApprovalModel::create([
+        //         'booking_id' => $booking->id,
+        //         'approver_id' => $approver_id,
+        //         'level' => $level + 1,
+        //         'status' => 'pending',
+        //     ]);
+        // }
 
+        // return response()->json([
+        //     'message' => 'Booking created successfully!',
+        //     'booking' => $booking,
+        // ]);
         return response()->json([
             'message' => 'Booking created successfully!',
-            'booking' => $booking,
         ]);
     }
 

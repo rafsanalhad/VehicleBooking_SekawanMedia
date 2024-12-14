@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\DepartmentModel;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -14,6 +15,12 @@ class UserController extends Controller
     {
         $users = UserModel::with(['departments'])->get();
         return view('admin/content/user', compact('users'));
+    }
+
+    public function getUserModal()
+    {
+        $users = UserModel::where('role', 'user')->get();
+        return response()->json($users);
     }
 
     // Menambahkan user baru

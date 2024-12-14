@@ -43,3 +43,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('/approvals/{approval}/approve', [BookingController::class, 'approve']);
 //     Route::post('/approvals/{approval}/reject', [BookingController::class, 'reject']);
 // });
+// Route::get('/getUser', [UserController::class, 'getUser'])->name('getUser');
