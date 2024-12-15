@@ -124,7 +124,6 @@
 
 <script>
     function openModal() {
-    // Jalankan AJAX untuk mengambil data
     $.ajax({
         url: 'http://127.0.0.1:8000/getUser',
         headers: {

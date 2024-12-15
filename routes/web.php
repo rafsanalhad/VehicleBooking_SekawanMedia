@@ -19,9 +19,7 @@ use App\Http\Controllers\VehicleController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
 
 Route::get('/login', [AuthController::class, 'loginView'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -31,11 +29,15 @@ Route::get('/getUser', [UserController::class, 'getUserModal'])->name('getUser')
 Route::get('/getApprover', [ApprovalController::class, 'getApproverModal'])->name('getApprover');
 Route::get('/getApproverAdmin', [AdminController::class, 'getApproverModal'])->name('getApprovalAdmin');
 Route::get('/getVehicles', [VehicleController::class, 'getVehicles'])->name('getVehicles');
+Route::get('/getAllDepartment', [UserController::class, 'getAllDepartment'])->name('getAllDepartment');
+Route::get('/getUserById/{id}', [UserController::class, 'getUserById'])->name('getUserById');
 Route::get('admin/dashboard', [AdminController::class, 'index'])->name('adminDashboard');
 Route::post('admin/createBooking', [BookingController::class, 'createBooking'])->name('createBooking');
 Route::get('admin/users', [UserController::class, 'index'])->name('adminUsers');
 Route::get('admin/list-bookings', [AdminController::class, 'getListBooking'])->name('adminListBooking');
 Route::get('admin/list-approvals', [AdminController::class, 'getAllApproval'])->name('adminApproval');
+Route::post('admin/addUser', [UserController::class, 'addUser'])->name('addUser');
+Route::post('admin/editUser', [UserController::class, 'editUser'])->name('editUser');
 Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
 Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
 Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');

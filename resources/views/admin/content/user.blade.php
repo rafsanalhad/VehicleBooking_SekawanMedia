@@ -6,7 +6,14 @@
 <main class="p-6 space-y-6">
     <!-- History Booking -->
     <div class="bg-white p-6 rounded shadow">
-        <h2 class="text-gray-700 font-bold mb-4">List User</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-gray-700 font-bold">Karyawan / Pengguna</h2>
+            <!-- Add Booking Button -->
+            <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
+                onclick="openModal(null)">
+                + Tambah Karyawan
+            </button>
+        </div>
         <table class="w-full border-collapse">
             <thead>
                 <tr class="bg-gray-100">
@@ -29,14 +36,186 @@
                     <td class="p-3">{{ $user->departments->name }}</td>
                     <td class="p-3 text-yellow-600">{{ $user->departments->location }}</td>
                     <td class="p-3">
-                        <button class="bg-yellow-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700 mt-2">Edit</button>
-                        <button class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2">Hapus</button>
+                        <button class="bg-yellow-400 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-400 mt-2"
+                            onclick="openModal('{{ $user->id }}')">Edit</button>
+                        <button
+                            class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2">Hapus</button>
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 w-full h-full">
+    <div class="bg-white rounded-lg w-96 p-6 space-y-4 shadow-lg">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">Tambah Pengguna Baru</h3>
+            <button class="text-gray-500 hover:text-red-600" onclick="closeModal()">&times;</button>
+        </div>
+        <form id="editUserForm" class="space-y-4">
+            @csrf
+            <input type="hidden" name="id" id="id">
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="name">Nama</label>
+                <input type="text" id="name" name="name"
+                    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="email">Email</label>
+                <input type="text" id="email" name="email"
+                    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="role">Role</label>
+                <select id="role" name="role"
+                    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" selected disabled>Pilih Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="approver">Approver</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="department">Departement</label>
+                <select id="department" name="department"
+                    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" selected disabled>Pilih Departement</option>
+                </select>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
+                    onclick="closeModal()">Cancel</button>
+                <button type="submit"
+                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</main>
+</div>
+
+<script>
+    function openModal(id) {
+        if(id == null){
+            
+        $.ajax({
+        url: 'http://127.0.0.1:8000/getAllDepartment/',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+        success: function (dataDepartment) {
+            let departmentsOptions = '<option value="" selected disabled>Pilih Departement</option>';
+                    dataDepartment.forEach(function (department) {
+                        departmentsOptions += `<option value="${department.id}">${department.name}</option>`;
+                    });
+                    $('#department').html(departmentsOptions);
+                    $('#department').val(data[0].department_id);
+        },
+        error: function (error){
+            alert('Terjadi kesalahan: ' + error.responseText)
+        }
+        });
+            $('#id').val('');
+            $('#name').val('');
+            $('#email').val('');
+            $('#role').val('');
+            $('#department').val('');
+            $('#modal').removeClass('hidden');
+        }else{
+            $.ajax({
+        url: 'http://127.0.0.1:8000/getUserById/' + id,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+        success: function (data) {
+        //     let employeeOptions = '<option value="" selected disabled>Pilih Karyawan</option>';
+        //             data.forEach(function (employee) {
+        //                 employeeOptions += `<option value="${employee.id}">${employee.name}</option>`;
+        //             });
+        //             $('#user_id').html(employeeOptions);
+        //             $('#driver_id').html(employeeOptions);
+        // },
+
+        console.log(data[0]);
+
+        $.ajax({
+        url: 'http://127.0.0.1:8000/getAllDepartment/',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+        success: function (dataDepartment) {
+            let departmentsOptions = '<option value="" selected disabled>Pilih Departement</option>';
+                    dataDepartment.forEach(function (department) {
+                        departmentsOptions += `<option value="${department.id}">${department.name}</option>`;
+                    });
+                    $('#department').html(departmentsOptions);
+                    $('#department').val(data[0].department_id);
+        },
+        error: function (error){
+            alert('Terjadi kesalahan: ' + error.responseText)
+        }
+        });
+        $('#id').val(data[0].id);
+        $('#name').val(data[0].name);
+        $('#email').val(data[0].email);
+        $('#role').val(data[0].role);
+        console.log(data[0].department_id);
+        $('#modal').removeClass('hidden');
+        },
+        error: function (error) {
+            alert('Terjadi kesalahan: ' + error.responseText);
+        }
+    });
+        }
+}
+
+function closeModal() {
+    $('#modal').addClass('hidden');
+}
+$('#editUserForm').on('submit', function (e) {
+        e.preventDefault();
+        if($('#id').val() == ''){
+            $.ajax({
+                url: '{{ route('addUser') }}',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    alert(response.message);
+                    closeModal();
+                    location.reload();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    console.log(e.responseText)
+                }
+            });
+        }else{
+            $.ajax({
+                url: '{{ route('editUser') }}',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    alert(response.message);
+                    closeModal();
+                    location.reload();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    console.log(e.responseText)
+                }
+            });
+        }
+    });
+</script>
 
 @endsection
