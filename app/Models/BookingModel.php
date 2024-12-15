@@ -12,9 +12,15 @@ class BookingModel extends Model
 
     protected $table = 'bookings';
     protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
+        'id',
         'vehicle_id',
         'driver_id',
+        'user_id',
+        'start_datetime',
+        'end_datetime',
         'created_by',
         'approval_status',
         'start_date',
@@ -31,7 +37,12 @@ class BookingModel extends Model
     {
         return $this->hasMany(ApprovalModel::class, 'booking_id');
     }
-    public function vehicles(){
+    public function vehicles()
+    {
         return $this->belongsTo(VehiclesModel::class, 'vehicle_id');
+    }
+    public function driver()
+    {
+        return $this->belongsTo(UserModel::class, 'driver_id');
     }
 }

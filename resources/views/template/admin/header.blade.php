@@ -39,7 +39,7 @@
                                 href="{{route('adminDashboard')}}">Dashboard</a></li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminUsers')}}">Users</a>
                         </li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminBooking')}}">Booking
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminListBooking')}}">Booking
                                 List</a></li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Approval
                                 List</a></li>

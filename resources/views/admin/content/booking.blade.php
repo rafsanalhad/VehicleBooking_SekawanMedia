@@ -89,14 +89,19 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700" for="vehicle_type">Jenis Kendaraan</label>
-                    <select id="vehicle_type" name="vehicle_type"
+                    <select id="vehicle_type" name="vehicle_id"
                         class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="" selected disabled>Pilih Kendaraan</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700" for="booking_date">Tanggal Pengajuan</label>
-                    <input type="date" id="booking_date" name="booking_date"
+                    <label class="block text-sm font-medium text-gray-700" for="start_date">Tanggal Pengajuan</label>
+                    <input type="date" id="start_date" name="start_date"
+                        class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700" for="end_date">Tanggal Pengembalian</label>
+                    <input type="date" id="end_date" name="end_date"
                         class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
@@ -170,7 +175,7 @@
         success: function (data) {
             let vehicleOptions = '<option value="" selected disabled>Pilih Kendaraan</option>';
                     data.forEach(function (vehicle) {
-                        vehicleOptions += `<option value="${vehicle.id}">${vehicle.type}</option>`;
+                        vehicleOptions += `<option value="${vehicle.id}">${vehicle.model}</option>`;
                     });
                     $('#vehicle_type').html(vehicleOptions);
         },

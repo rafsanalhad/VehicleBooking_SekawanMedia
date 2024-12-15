@@ -20,10 +20,16 @@ class UserModel extends Authenticatable
      */
     protected $table = 'users';
     protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'role',
+        'department_id',
+
     ];
 
     /**

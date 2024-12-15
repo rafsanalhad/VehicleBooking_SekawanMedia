@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('approval_logs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->foreignId('approver_id')->constrained('users')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->uuid('booking_id');
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
+            $table->uuid('approver_id');
+            $table->foreign('approver_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('approval_level');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('comments')->nullable();

@@ -10,19 +10,21 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
-            $table->foreignId('driver_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
-            $table->string('purpose', 255)->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected', 'completed'])->default('pending');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('bookings', function (Blueprint $table) {
+        $table->uuid('id')->primary();
+        $table->uuid('user_id');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
+        $table->uuid('driver_id')->nullable();
+        $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
+        $table->dateTime('start_datetime');
+        $table->dateTime('end_datetime');
+        $table->string('purpose', 255)->nullable();
+        $table->enum('status', ['pending', 'approved', 'rejected', 'completed'])->default('pending');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
