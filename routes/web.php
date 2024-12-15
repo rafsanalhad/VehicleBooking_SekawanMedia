@@ -38,6 +38,7 @@ Route::get('admin/list-bookings', [AdminController::class, 'getListBooking'])->n
 Route::get('admin/list-approvals', [AdminController::class, 'getAllApproval'])->name('adminApproval');
 Route::post('admin/addUser', [UserController::class, 'addUser'])->name('addUser');
 Route::post('admin/editUser', [UserController::class, 'editUser'])->name('editUser');
+Route::post('admin/deleteUser', [UserController::class, 'deleteUserById'])->name('deleteUser');
 Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
 Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
 Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');

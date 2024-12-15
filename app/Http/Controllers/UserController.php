@@ -54,7 +54,7 @@ class UserController extends Controller
             'department_id' => $validate['department'],
         ]);
 
-        return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+        return response()->json(['message' => 'User telah berhasil ditambah', 'user' => $user], 201);
     }
 
     public function editUser(Request $request)
@@ -77,12 +77,13 @@ class UserController extends Controller
             'department_id' => $validate['department'],
         ]);
 
-        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+        return response()->json(['message' => 'User telah berhasil diedit', 'user' => $user]);
     }
 
     // Menghapus user
-    public function destroy($id)
+    public function deleteUserById(Request $request)
     {
+        $id = $request->id;
         $user = UserModel::find($id);
 
         if (!$user) {
@@ -90,6 +91,7 @@ class UserController extends Controller
         }
 
         $user->delete();
-        return response()->json(['message' => 'User deleted successfully']);
+
+        return response()->json(['message' => 'User berhasil dihapus']);
     }
 }

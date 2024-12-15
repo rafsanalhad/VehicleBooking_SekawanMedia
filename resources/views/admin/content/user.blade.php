@@ -38,8 +38,8 @@
                     <td class="p-3">
                         <button class="bg-yellow-400 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-400 mt-2"
                             onclick="openModal('{{ $user->id }}')">Edit</button>
-                        <button
-                            class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2">Hapus</button>
+                        <button class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2"
+                            onclick="deleteUser('{{ $user->id }}')">Hapus</button>
                     </td>
                 </tr>
                 @endforeach
@@ -190,9 +190,14 @@ $('#editUserForm').on('submit', function (e) {
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
-                    alert(response.message);
+                    Swal.fire({
+                    title: "Berhasil!",
+                    text: response.message,
+                    icon: "success"
+                    }).then(() => {
+                        location.reload();
+                    });
                     closeModal();
-                    location.reload();
                 },
                 error: function (e) {
                     alert(e.responseText);
@@ -205,9 +210,14 @@ $('#editUserForm').on('submit', function (e) {
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
-                    alert(response.message);
+                    Swal.fire({
+                    title: "Berhasil!",
+                    text: response.message,
+                    icon: "success"
+                    }).then(() => {
+                        location.reload();
+                    });
                     closeModal();
-                    location.reload();
                 },
                 error: function (e) {
                     alert(e.responseText);
@@ -216,6 +226,46 @@ $('#editUserForm').on('submit', function (e) {
             });
         }
     });
+
+    function deleteUser(id) {
+        Swal.fire({
+        title: "Apa kamu yakin?",
+        text: "Kamu akan menghapus karyawan",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Iya",
+        cancelButtonText: "Tidak"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            alert(id);
+            $.ajax({
+                url: '{{ route('deleteUser') }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                data: JSON.stringify({ id: id }),
+                success: function (response) {
+                    Swal.fire({
+                    title: "Berhasil!",
+                    text: response.message,
+                    icon: "success"
+                    }).then(() => {
+                        location.reload();
+                    });
+                    closeModal();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    console.log(e.responseText)
+                }
+            });
+        }
+    });
+        }
 </script>
 
 @endsection
