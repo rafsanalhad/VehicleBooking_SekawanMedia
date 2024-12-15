@@ -22,9 +22,6 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             UserSeeder::class,
             VehicleSeeder::class,
-            BookingSeeder::class,
-            ApprovalLogSeeder::class,
-            ApplicationLogSeeder::class,
         ]);
     }
 }

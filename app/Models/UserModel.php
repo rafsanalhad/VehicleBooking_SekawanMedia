@@ -20,10 +20,16 @@ class UserModel extends Authenticatable
      */
     protected $table = 'users';
     protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'role',
+        'department_id',
+
     ];
 
     /**
@@ -45,7 +51,8 @@ class UserModel extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    function departments(){
+    function departments()
+    {
         return $this->belongsTo(DepartmentModel::class, 'department_id');
     }
 }

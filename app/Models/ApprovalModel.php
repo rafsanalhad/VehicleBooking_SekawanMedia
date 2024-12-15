@@ -11,12 +11,16 @@ class ApprovalModel extends Model
     
     protected $table = 'approval_logs';
     protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'booking_id',
-        'approver_id',
+        'approver_id',  
         'level',
         'status',
+        'approval_level',
         'approval_date',
     ];
 
