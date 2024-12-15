@@ -18,10 +18,10 @@ return new class extends Migration
         $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
         $table->uuid('driver_id')->nullable();
         $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
-        $table->dateTime('start_datetime');
-        $table->dateTime('end_datetime');
+        $table->date('start_datetime');
+        $table->date('end_datetime');
         $table->string('purpose', 255)->nullable();
-        $table->enum('status', ['pending', 'approved', 'rejected', 'completed'])->default('pending');
+        $table->enum('status', ['pending', 'approved', 'approved_pending_1', 'rejected', 'completed']);
         $table->timestamps();
     });
 }

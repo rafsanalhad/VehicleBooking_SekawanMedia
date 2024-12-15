@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -18,24 +19,31 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()
                 ->back()
-                ->withErrors($validator)
-                ->withInput();
+                ->withErrors(['login' => 'Email dan password tidak boleh kosong']);
         }
-
-        $user = UserModel::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        $data=[
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+        if(Auth::attempt($data)){
+            $user = Auth::user();
+            if ($user->role == 'admin') {
+                return redirect()->route('adminDashboard');
+            } else if ($user->role == 'approver') {
+                return redirect()->route('approvalDashboard');
+            }
+        }else{
             return redirect()
                 ->back()
                 ->withErrors(['login' => 'Invalid email or password']);
         }
-        return redirect()->route('dashboard');
+
     }
 
     public function signUpView()

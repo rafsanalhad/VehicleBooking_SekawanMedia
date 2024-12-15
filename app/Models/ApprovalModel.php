@@ -38,4 +38,8 @@ class ApprovalModel extends Model
     {
         return $this->booking->user();
     }
+    public function vehicleFromBooking()
+    {
+        return $this->booking->vehicles();
+    }
 }
