@@ -34,8 +34,9 @@ Route::get('/getVehicles', [VehicleController::class, 'getVehicles'])->name('get
 Route::get('admin/dashboard', [AdminController::class, 'index'])->name('adminDashboard');
 Route::post('admin/createBooking', [BookingController::class, 'createBooking'])->name('createBooking');
 Route::get('admin/users', [UserController::class, 'index'])->name('adminUsers');
-Route::get('admin/list-bookings', [BookingController::class, 'getListBooking'])->name('adminListBooking');
+Route::get('admin/list-bookings', [AdminController::class, 'getListBooking'])->name('adminListBooking');
 Route::get('admin/list-approvals', [AdminController::class, 'getAllApproval'])->name('adminApproval');
 Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
 Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
 Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');

@@ -36,17 +36,18 @@
                     <ul>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a
                                 href="{{route('adminDashboard')}}">Dashboard</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminUsers')}}">Users</a>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminUsers')}}">Menu Pengguna</a>
                         </li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminListBooking')}}">Booking
-                                List</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Approval
-                                List</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminListBooking')}}">Menu Pengajuan</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Menu Menyetujui</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="p-4 text-center">
-                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
+                </form>
             </div>
         </aside>
 

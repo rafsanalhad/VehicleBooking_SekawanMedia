@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ApprovalModel;
 use App\Models\UserModel;
+use App\Models\BookingModel;
 
 class AdminController extends Controller
 {
@@ -40,5 +41,10 @@ class AdminController extends Controller
             return response()->json(['message' => 'No approver found'], 404);
         }
         return response()->json($users);
+    }
+    public function getListBooking()
+    {
+        $bookings = BookingModel::with(['approvals', 'vehicles'])->get();
+        return view('admin/content/booking', compact('bookings'));
     }
 }
