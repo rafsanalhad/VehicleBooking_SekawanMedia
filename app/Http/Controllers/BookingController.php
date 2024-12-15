@@ -65,15 +65,6 @@ class BookingController extends Controller
             ->get();
     }
 
-    public function getListBooking()
-    {
-        // Mengambil semua data booking tanpa filter user_id
-        $bookings = BookingModel::with(['approvals', 'vehicles'])->get();
-
-        // Mengembalikan view 'admin/content/list_booking' dengan data bookings
-        return view('admin/content/booking', compact('bookings'));
-    }
-
 
     public function approve(Request $request, ApprovalModel $approval)
     {
@@ -95,21 +86,5 @@ class BookingController extends Controller
         }
 
         return response()->json(['message' => 'Approval recorded successfully']);
-    }
-
-    public function reject(Request $request, ApprovalModel $approval)
-    {
-        if ($approval->approver_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $approval->update([
-            'status' => 'rejected',
-            'approval_date' => now(),
-        ]);
-
-        $approval->booking->update(['approval_status' => 'rejected']);
-
-        return response()->json(['message' => 'Booking rejected']);
     }
 }

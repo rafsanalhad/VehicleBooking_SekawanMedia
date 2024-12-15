@@ -10,28 +10,27 @@
         <table class="w-full border-collapse">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="text-left p-3 font-medium">Booking ID</th>
-                    <th class="text-left p-3 font-medium">Employee Name</th>
+                    <th class="text-left p-3 font-medium">No</th>
+                    <th class="text-left p-3 font-medium">Nama Karyawan</th>
                     <th class="text-left p-3 font-medium">Email</th>
                     <th class="text-left p-3 font-medium">Role</th>
                     <th class="text-left p-3 font-medium">Departement</th>
-                    <th class="text-left p-3 font-medium">Location</th>
+                    <th class="text-left p-3 font-medium">Lokasi</th>
                     <th class="text-left p-3 font-medium">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
+                @foreach($users as $index => $user)
                 <tr class="border-t">
-                    <td class="p-3">{{ $user->id }}</td>
+                    <td class="p-3">{{ $index + 1 }}</td>
                     <td class="p-3">{{ $user->name }}</td>
                     <td class="p-3">{{ $user->email }}</td>
                     <td class="p-3">{{ $user->role }}</td>
                     <td class="p-3">{{ $user->departments->name }}</td>
                     <td class="p-3 text-yellow-600">{{ $user->departments->location }}</td>
                     <td class="p-3">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700">Details</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700 mt-2">Approve</button>
-                        <button class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2">Reject</button>
+                        <button class="bg-yellow-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700 mt-2">Edit</button>
+                        <button class="bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 mt-2">Hapus</button>
                     </td>
                 </tr>
             @endforeach

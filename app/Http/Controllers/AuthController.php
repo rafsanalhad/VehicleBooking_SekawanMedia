@@ -27,23 +27,22 @@ class AuthController extends Controller
                 ->back()
                 ->withErrors(['login' => 'Email dan password tidak boleh kosong']);
         }
-        $data=[
+        $data = [
             'email' => $request->email,
             'password' => $request->password
         ];
-        if(Auth::attempt($data)){
+        if (Auth::attempt($data)) {
             $user = Auth::user();
             if ($user->role == 'admin') {
                 return redirect()->route('adminDashboard');
             } else if ($user->role == 'approver') {
                 return redirect()->route('approvalDashboard');
             }
-        }else{
+        } else {
             return redirect()
                 ->back()
                 ->withErrors(['login' => 'Invalid email or password']);
         }
-
     }
 
     public function signUpView()
@@ -73,5 +72,12 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('loginView')->with('success', 'Account created successfully. Please log in.');
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('loginView')->with('success', 'You have been logged out successfully.');
     }
 }

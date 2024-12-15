@@ -43,7 +43,10 @@
                 </nav>
             </div>
             <div class="p-4 text-center">
-                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
+                </form>
             </div>
         </aside>
 

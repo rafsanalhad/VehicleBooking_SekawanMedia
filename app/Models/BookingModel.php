@@ -42,4 +42,13 @@ class BookingModel extends Model
     {
         return $this->belongsTo(UserModel::class, 'driver_id');
     }
+
+    public function fetchApprovalNames()
+    {
+        return $this->approvals
+            ->map(function ($approval) {
+                return $approval->approver->name ?? 'Unknown';
+            })
+            ->implode(', ');
+    }
 }
