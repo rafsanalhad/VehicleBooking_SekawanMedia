@@ -12,15 +12,15 @@
             <p class="text-2xl font-semibold">1,234</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">Revenue</h2>
+            <h2 class="text-gray-700 font-bold">Jumlah Kendaraan</h2>
             <p class="text-2xl font-semibold">$12,345</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">New Orders</h2>
+            <h2 class="text-gray-700 font-bold">Kendaraan Yang Tersedia</h2>
             <p class="text-2xl font-semibold">567</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">Pending Tickets</h2>
+            <h2 class="text-gray-700 font-bold">Kendaraan yang Dipinjam</h2>
             <p class="text-2xl font-semibold">34</p>
         </div>
     </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DepartmentModel;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Guid\Guid;
 
 class UserController extends Controller
 {
@@ -23,63 +24,59 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    // Menambahkan user baru
-    public function store(Request $request)
+    public function getUserById($id)
     {
-        $request->validate([
+        $users = UserModel::with('departments')->where('id', $id)->get();
+        return response()->json($users);
+    }
+
+    public function getAllDepartment(){
+        $departments = DepartmentModel::all();
+        return response()->json($departments);
+    }
+
+    // Menambahkan user baru
+    public function addUser(Request $request)
+    {
+        $validate=$request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'role' => 'required|in:admin,approver',
-            'phone_number' => 'nullable|string|max:15',
+            'email' => 'required|string|email|max:255|unique:users,email,',
+            'role' => 'required',
+            'department' => 'required',
         ]);
 
         $user = UserModel::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'phone_number' => $request->phone_number,
+            'id' => Guid::uuid4()->toString(),
+            'name' => $validate['name'],
+            'email' => $validate['email'],
+            'password' => Hash::make('12345678'),
+            'role' => $validate['role'],
+            'department_id' => $validate['department'],
         ]);
 
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
 
-    public function show($id)
+    public function editUser(Request $request)
     {
-        $user = UserModel::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        return response()->json($user);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = UserModel::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'sometimes|string|min:8',
-            'role' => 'sometimes|in:admin,approver',
-            'phone_number' => 'nullable|string|max:15',
+        $validate=$request->validate([
+            'id' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $request->id,
+            'role' => 'required',
+            'department' => 'required',
         ]);
-
+        $user = UserModel::find($validate['id']);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
         $user->update([
-            'name' => $request->name ?? $user->name,
-            'email' => $request->email ?? $user->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'role' => $request->role ?? $user->role,
-            'phone_number' => $request->phone_number ?? $user->phone_number,
+            'name' => $validate['name'],
+            'email' => $validate['email'],
+            'role' => $validate['role'],
+            'department_id' => $validate['department'],
         ]);
-        
+
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
     }
 
