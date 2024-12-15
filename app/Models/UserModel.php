@@ -29,6 +29,7 @@ class UserModel extends Authenticatable
         'password',
         'role',
         'department_id',
+        'status',
 
     ];
 

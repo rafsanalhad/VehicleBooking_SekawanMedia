@@ -79,7 +79,7 @@ class UserController extends Controller
             'role' => $request->role ?? $user->role,
             'phone_number' => $request->phone_number ?? $user->phone_number,
         ]);
-
+        
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
     }
 

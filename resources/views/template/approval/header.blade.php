@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page_title', 'Admin Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -25,6 +26,8 @@
         margin: 0;
     }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="flex min-h-screen">
@@ -34,10 +37,8 @@
                 <div class="p-4 text-lg font-bold text-center bg-gray-900">Admin Panel</div>
                 <nav class="mt-6">
                     <ul>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminDashboard')}}">Dashboard</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminUsers')}}">Users</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminBooking')}}">Booking List</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Approval List</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('approvalDashboard')}}">Dashboard</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('approval')}}">Pengajuan</a></li>
                     </ul>
                 </nav>
             </div>

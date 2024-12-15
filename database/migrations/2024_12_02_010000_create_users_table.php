@@ -21,7 +21,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('departments')
                 ->onDelete('set null');
-            $table->string('status');
+            $table->string('status', 100)->default('active');
         });
     }
 

@@ -23,9 +23,7 @@ class BookingController extends Controller
             'approver_2' => 'required',
         ]);
 
-        $booking_id = Str::uuid(); // Generate UUID for booking
-
-        // Simpan data booking
+        $booking_id = Str::uuid();
             BookingModel::create([
             'id' => $booking_id,
             'vehicle_id' => $validated['vehicle_id'],
@@ -37,7 +35,6 @@ class BookingController extends Controller
             'purpose' => $validated['purpose'],
         ]);
 
-        // Simpan approval pertama
         ApprovalModel::create([
             'id' => Str::uuid(),
             'booking_id' => $booking_id,
@@ -46,7 +43,6 @@ class BookingController extends Controller
             'status' => 'pending',
         ]);
 
-        // Simpan approval kedua
         ApprovalModel::create([
             'id' => Str::uuid(),
             'booking_id' => $booking_id,

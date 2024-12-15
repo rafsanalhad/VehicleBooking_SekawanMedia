@@ -145,13 +145,14 @@
     });
 
     $.ajax({
-        url: 'http://127.0.0.1:8000/getApprover',
+        url: 'http://127.0.0.1:8000/getApproverAdmin',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
         },
         method: 'GET',
         success: function (data) {
+            alert(data);
             // Tampilkan data (contoh)
             let approverOptions = '<option value="" selected disabled>Pilih Karyawan</option>';
                     data.forEach(function (approver) {

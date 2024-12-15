@@ -29,9 +29,13 @@ Route::get('/signup', [AuthController::class, 'signUpView'])->name('signUpView')
 Route::post('/signup', [AuthController::class, 'signUp'])->name('signUp');
 Route::get('/getUser', [UserController::class, 'getUserModal'])->name('getUser');
 Route::get('/getApprover', [ApprovalController::class, 'getApproverModal'])->name('getApprover');
+Route::get('/getApproverAdmin', [AdminController::class, 'getApproverModal'])->name('getApprovalAdmin');
 Route::get('/getVehicles', [VehicleController::class, 'getVehicles'])->name('getVehicles');
 Route::get('admin/dashboard', [AdminController::class, 'index'])->name('adminDashboard');
 Route::post('admin/createBooking', [BookingController::class, 'createBooking'])->name('createBooking');
 Route::get('admin/users', [UserController::class, 'index'])->name('adminUsers');
 Route::get('admin/list-bookings', [BookingController::class, 'getListBooking'])->name('adminListBooking');
-Route::get('admin/list-approvals', [ApprovalController::class, 'getAllApproval'])->name('adminApproval');
+Route::get('admin/list-approvals', [AdminController::class, 'getAllApproval'])->name('adminApproval');
+Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
+Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
+Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');

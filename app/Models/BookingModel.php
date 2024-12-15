@@ -21,11 +21,8 @@ class BookingModel extends Model
         'user_id',
         'start_datetime',
         'end_datetime',
-        'created_by',
-        'approval_status',
-        'start_date',
-        'end_date',
         'purpose',
+        'status',
     ];
 
     public function user()
