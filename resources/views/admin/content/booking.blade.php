@@ -7,7 +7,7 @@
     <!-- List Booking -->
     <div class="bg-white p-6 rounded shadow">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-gray-700 font-bold">List Booking</h2>
+            <h2 class="text-gray-700 font-bold">Pengajuan</h2>
             <!-- Add Booking Button -->
             <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
                 onclick="openModal()">

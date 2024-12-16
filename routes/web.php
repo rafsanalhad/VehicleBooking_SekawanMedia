@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController; 
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::get('admin/list-approvals', [AdminController::class, 'getAllApproval'])->
 Route::post('admin/addUser', [UserController::class, 'addUser'])->name('addUser');
 Route::post('admin/editUser', [UserController::class, 'editUser'])->name('editUser');
 Route::post('admin/deleteUser', [UserController::class, 'deleteUserById'])->name('deleteUser');
+Route::get('admin/vehicles', [VehicleController::class, 'index'])->name('adminVehicles');
+Route::get('admin/departments', [DepartmentController::class, 'index'])->name('adminDepartments');
 Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
 Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
 Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');

@@ -41,6 +41,8 @@
                         </li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminListBooking')}}">Menu Pengajuan</a></li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Menu Menyetujui</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminVehicles')}}">Menu Kendaraan</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminDepartments')}}">Menu Departement</a></li>
                     </ul>
                 </nav>
             </div>
