@@ -8,11 +8,17 @@
     <div class="bg-white p-6 rounded shadow">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-gray-700 font-bold">Pengajuan</h2>
-            <!-- Add Booking Button -->
-            <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
-                onclick="openModal()">
-                + Add Booking
-            </button>
+            <div class="">
+                <!-- Add Booking Button -->
+                <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
+                    onclick="openModal()">
+                    + Add Booking
+                </button>
+    
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none" id="exportButton">
+                    Export to Excel
+                </button>
+            </div>
         </div>
 
         <table class="w-full border-collapse">
@@ -123,6 +129,25 @@
 </div>
 
 <script>
+    document.getElementById('exportButton').addEventListener('click', function () {
+    // Ambil data tabel
+    const table = document.querySelector("table");
+    const rows = Array.from(table.rows);
+    
+    // Mengumpulkan data tabel dalam array
+    const data = rows.map(row => {
+        const cells = Array.from(row.cells);
+        return cells.map(cell => cell.textContent.trim());
+    });
+
+    // Menggunakan SheetJS untuk membuat file Excel
+    const ws = XLSX.utils.aoa_to_sheet(data);  // Convert array of arrays to sheet
+    const wb = XLSX.utils.book_new();  // Create a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Bookings");  // Append sheet to workbook
+
+    // Menyimpan file Excel
+    XLSX.writeFile(wb, "Bookings.xlsx");
+});
     function openModal() {
     $.ajax({
         url: '{{ route('getUser') }}',
