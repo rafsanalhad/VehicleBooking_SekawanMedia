@@ -20,7 +20,6 @@ return new class extends Migration
             $table->enum('ownership_type', ['company', 'rental']);
             $table->enum('status', ['available', 'in_use', 'maintenance'])->default('available');
             $table->decimal('fuel_consumption', 5, 2)->nullable();
-            $table->timestamps();
         });
     }
 

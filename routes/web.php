@@ -41,7 +41,14 @@ Route::post('admin/addUser', [UserController::class, 'addUser'])->name('addUser'
 Route::post('admin/editUser', [UserController::class, 'editUser'])->name('editUser');
 Route::post('admin/deleteUser', [UserController::class, 'deleteUserById'])->name('deleteUser');
 Route::get('admin/vehicles', [VehicleController::class, 'index'])->name('adminVehicles');
+Route::post('admin/getVehicleById', [VehicleController::class, 'getVehicleById'])->name('getVehicleById');
+Route::post('admin/addVehicle', [VehicleController::class, 'addVehicle'])->name('addVehicle');
+Route::post('admin/editVehicle', [VehicleController::class, 'editVehicle'])->name('editVehicle');
+Route::post('admin/deleteVehicle', [VehicleController::class, 'deleteVehiclesById'])->name('deleteVehicle');
 Route::get('admin/departments', [DepartmentController::class, 'index'])->name('adminDepartments');
+Route::post('admin/addDepartment', [DepartmentController::class, 'addDepartment'])->name('addDepartment');
+Route::post('admin/editDepartment', [DepartmentController::class, 'editDepartment'])->name('editDepartment');
+Route::post('admin/deleteDepartment', [DepartmentController::class, 'deleteDepartmentById'])->name('deleteDepartment');
 Route::get('approval/dashboard', [ApprovalController::class, 'index'])->name('approvalDashboard');
 Route::get('approval/list-approval', [ApprovalController::class, 'approval'])->name('approval');
 Route::post('approval/update-approval/', [ApprovalController::class, 'updateApproval'])->name('updateApproval');
