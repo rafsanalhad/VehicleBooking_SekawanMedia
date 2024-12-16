@@ -124,7 +124,7 @@
 
 <script>
     function openModal(id) {
-        if(id == null){
+        if(id == null){ 
         $('#type').val('');
         $('#no_plat').val('');
         $('#model').val('');

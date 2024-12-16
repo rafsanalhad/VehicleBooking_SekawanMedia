@@ -52,7 +52,7 @@
             <h3 class="text-lg font-bold">Tambah Pengguna Baru</h3>
             <button class="text-gray-500 hover:text-red-600" onclick="closeModal()">&times;</button>
         </div>
-        <form id="vehicleForm" class="space-y-4">
+        <form id="departmentForm" class="space-y-4">
             @csrf
             <input type="hidden" name="id" id="id">
             <div>
@@ -80,16 +80,12 @@
 <script>
     function openModal(id) {
         if(id == null){
-        $('#type').val('');
-        $('#no_plat').val('');
-        $('#model').val('');
-        $('#ownership_type').val('');
-        $('#year').val('');
-        $('#status').val('');
+        $('#name').val('');
+        $('#location').val('');
         $('#modal').removeClass('hidden');
         }else{
             $.ajax({
-                url: '{{ route('getVehicleById') }}',
+                url: '{{ route('getDepartmentById') }}',
                 method: 'POST',
                 data: JSON.stringify({ id: id }),
                 headers: {
@@ -98,12 +94,8 @@
                 },
                 success: function (response) {
                     $('#id').val(response.id);
-                    $('#type').val(response.type);
-                    $('#no_plat').val(response.plate_number);
-                    $('#model').val(response.model);
-                    $('#year').val(response.year);
-                    $('#ownership_type').val(response.ownership_type);
-                    $('#status').val(response.status);
+                    $('#name').val(response.name);
+                    $('#location').val(response.location);
                     $('#modal').removeClass('hidden');
                 },
                 error: function (e) {
@@ -117,11 +109,11 @@
 function closeModal() {
     $('#modal').addClass('hidden');
 }
-$('#vehicleForm').on('submit', function (e) {
+$('#departmentForm').on('submit', function (e) {
         e.preventDefault();
         if($('#id').val() == ''){
             $.ajax({
-                url: '{{ route('addVehicle') }}',
+                url: '{{ route('addDepartment') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
@@ -141,7 +133,7 @@ $('#vehicleForm').on('submit', function (e) {
             });
         }else{
             $.ajax({
-                url: '{{ route('editVehicle') }}',
+                url: '{{ route('editDepartment') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
@@ -165,7 +157,7 @@ $('#vehicleForm').on('submit', function (e) {
     function deleteUser(id) {
         Swal.fire({
         title: "Apa kamu yakin?",
-        text: "Kamu akan menghapus kendaraan",
+        text: "Kamu akan menghapus departement",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -175,7 +167,7 @@ $('#vehicleForm').on('submit', function (e) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '{{ route('deleteVehicle') }}',
+                url: '{{ route('deleteDepartment') }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json'
