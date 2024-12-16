@@ -46,6 +46,7 @@ Route::post('admin/addVehicle', [VehicleController::class, 'addVehicle'])->name(
 Route::post('admin/editVehicle', [VehicleController::class, 'editVehicle'])->name('editVehicle');
 Route::post('admin/deleteVehicle', [VehicleController::class, 'deleteVehiclesById'])->name('deleteVehicle');
 Route::get('admin/departments', [DepartmentController::class, 'index'])->name('adminDepartments');
+Route::post('admin/getDepartmentById', [DepartmentController::class, 'getDepartmentById'])->name('getDepartmentById');
 Route::post('admin/addDepartment', [DepartmentController::class, 'addDepartment'])->name('addDepartment');
 Route::post('admin/editDepartment', [DepartmentController::class, 'editDepartment'])->name('editDepartment');
 Route::post('admin/deleteDepartment', [DepartmentController::class, 'deleteDepartmentById'])->name('deleteDepartment');
