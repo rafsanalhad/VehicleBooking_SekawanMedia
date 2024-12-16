@@ -52,7 +52,7 @@ class BookingController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Booking created successfully!',
+            'message' => 'Pengajuan Telah Berhasil Ditambahkan',
             'booking_id' => $booking_id,
         ]);
     }

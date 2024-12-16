@@ -125,7 +125,7 @@
 <script>
     function openModal() {
     $.ajax({
-        url: 'http://127.0.0.1:8000/getUser',
+        url: '{{ route('getUser') }}',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -145,7 +145,7 @@
     });
 
     $.ajax({
-        url: 'http://127.0.0.1:8000/getApproverAdmin',
+        url: '{{ route('getApprovalAdmin') }}',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -166,7 +166,7 @@
         }
     });
     $.ajax({
-        url: 'http://127.0.0.1:8000/getVehicles',
+        url: '{{ route('getVehicles') }}',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -199,9 +199,14 @@
             method: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                alert(response.message);
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: response.message,
+                    icon: "success"
+                    }).then(() => {
+                        location.reload();
+                    });
                 closeModal();
-                location.reload();
             },
             error: function (e) {
                 alert(e.responseText);

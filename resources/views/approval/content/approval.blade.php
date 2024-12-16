@@ -63,7 +63,7 @@
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: 'http://127.0.0.1:8000/approval/update-approval',
+                url: '{{ route('updateApproval') }}',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,7 +112,7 @@
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: 'http://127.0.0.1:8000/approval/update-approval',
+                url: '{{ route('updateApproval') }}',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

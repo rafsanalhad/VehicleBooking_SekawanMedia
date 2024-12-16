@@ -103,7 +103,7 @@
         if(id == null){
             
         $.ajax({
-        url: 'http://127.0.0.1:8000/getAllDepartment/',
+        url: '{{ route('getAllDepartment') }}',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -115,7 +115,6 @@
                         departmentsOptions += `<option value="${department.id}">${department.name}</option>`;
                     });
                     $('#department').html(departmentsOptions);
-                    $('#department').val(data[0].department_id);
         },
         error: function (error){
             alert('Terjadi kesalahan: ' + error.responseText)
@@ -129,7 +128,7 @@
             $('#modal').removeClass('hidden');
         }else{
             $.ajax({
-        url: 'http://127.0.0.1:8000/getUserById/' + id,
+        url: '{{ route('getUserById', ['id' => '__ID__']) }}'.replace('__ID__', id),
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -147,7 +146,7 @@
         console.log(data[0]);
 
         $.ajax({
-        url: 'http://127.0.0.1:8000/getAllDepartment/',
+        url: '{{ route('getAllDepartment') }}',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json'
@@ -239,7 +238,6 @@ $('#editUserForm').on('submit', function (e) {
         cancelButtonText: "Tidak"
     }).then((result) => {
         if (result.isConfirmed) {
-            alert(id);
             $.ajax({
                 url: '{{ route('deleteUser') }}',
                 headers: {
