@@ -85,6 +85,7 @@
                             text: data.message,
                             icon: "error"
                         });
+                        console.log(data.message);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -134,6 +135,7 @@
                             text: data.message || "Gagal menolak pengajuan.",
                             icon: "error"
                         });
+                        console.log(data.message);
                     }
                 },
                 error: function(xhr, status, error) {

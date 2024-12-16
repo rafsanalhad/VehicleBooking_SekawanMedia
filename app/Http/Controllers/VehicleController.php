@@ -8,6 +8,10 @@ use App\Models\UserModel;
 
 class VehicleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $vehicles = VehiclesModel::orderBy('id', 'desc')->get();
@@ -20,15 +24,20 @@ class VehicleController extends Controller
         return response()->json($vehicles);
     }
 
-    public function getVehicleById(Request $request){
+    public function getVehicleById(Request $request)
+    {
         $id = $request->id;
         $vehicles = VehiclesModel::where('id', $id)->first();
+        return response()->json($vehicles);
+    }
+    public function getVehicleInUse(){
+        $vehicles = VehiclesModel::where('status', 'in_use')->get();
         return response()->json($vehicles);
     }
 
     public function addVehicle(Request $request)
     {
-        $validate=$request->validate([
+        $validate = $request->validate([
             'type' => 'required ',
             'no_plat' => 'required',
             'model' => 'required',
@@ -52,7 +61,7 @@ class VehicleController extends Controller
 
     public function editVehicle(Request $request)
     {
-        $validate=$request->validate([
+        $validate = $request->validate([
             'id' => 'required',
             'type' => 'required ',
             'no_plat' => 'required',
@@ -90,6 +99,4 @@ class VehicleController extends Controller
 
         return response()->json(['message' => 'Kendaraan berhasil dihapus']);
     }
-
-
 }

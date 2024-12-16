@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ApprovalModel;
 use App\Models\UserModel;
 use App\Models\BookingModel;
+use App\Models\VehiclesModel;
 
 class ApprovalController extends Controller
 {
@@ -56,6 +57,8 @@ class ApprovalController extends Controller
         // Cari data approval berdasarkan ID
         $approval = ApprovalModel::find($validated['id']);
 
+        $vehicle = VehiclesModel::find($approval->booking->vehicle_id);
+
         // Jika approval tidak ditemukan
         if (!$approval) {
             return response()->json(['message' => 'Approval not found'], 404);
@@ -78,9 +81,12 @@ class ApprovalController extends Controller
                 $booking->update([
                     'status' => 'approved'
                 ]);
+                $vehicle->update([
+                    'status' => 'in_use'
+                ]);
                 return response()->json(['message' => 'success']);
             }
-        } else {
+        } else {    
             $booking->update([
                 'status' => 'rejected'
             ]);

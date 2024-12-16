@@ -37,6 +37,8 @@ class AuthController extends Controller
                 return redirect()->route('adminDashboard');
             } else if ($user->role == 'approver') {
                 return redirect()->route('approvalDashboard');
+            }else if($user->role == 'user'){
+                return redirect()->route('userDashboard');
             }
         } else {
             return redirect()

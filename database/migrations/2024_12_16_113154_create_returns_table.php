@@ -10,10 +10,9 @@ return new class extends Migration
     {
         Schema::create('returns', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('booking_id');
-            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
             $table->date('return_date');
             $table->enum('condition', ['good', 'damaged', 'lost'])->default('good');
             $table->string('remarks', 255)->nullable(); 
