@@ -20,6 +20,7 @@
     <title>@yield('page_title', 'Admin Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
        body {
     overflow: visible;
@@ -43,6 +44,7 @@
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminApproval')}}">Menu Menyetujui</a></li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminVehicles')}}">Menu Kendaraan</a></li>
                         <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminDepartments')}}">Menu Departement</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{route('adminReturns')}}">Menu Pengembalian</a></li>
                     </ul>
                 </nav>
             </div>

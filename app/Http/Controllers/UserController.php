@@ -8,14 +8,22 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\DepartmentModel;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Guid\Guid;
+use App\Models\BookingModel;
 
 class UserController extends Controller
 {
-    // Menampilkan semua user
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $users = UserModel::with(['departments'])->get();
         return view('admin/content/user', compact('users'));
+    }
+
+    public function userView(){
+        return view('user/content/dashboard');
     }
 
     public function getUserModal()
@@ -30,12 +38,16 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function bookingByPerson(){
+        $bookings = BookingModel::with('user', 'vehicles', 'approvals')->where('user_id', auth()->user()->id)->get();
+        return view('user/content/booking', compact('bookings'));
+    }
+
     public function getAllDepartment(){
         $departments = DepartmentModel::all();
         return response()->json($departments);
     }
 
-    // Menambahkan user baru
     public function addUser(Request $request)
     {
         $validate=$request->validate([

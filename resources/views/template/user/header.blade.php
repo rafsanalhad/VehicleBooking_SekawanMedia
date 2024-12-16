@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('page_title', 'Admin Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -34,15 +35,17 @@
                 <div class="p-4 text-lg font-bold text-center bg-gray-900">Admin Panel</div>
                 <nav class="mt-6">
                     <ul>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Dashboard</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Users</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Pengajuan</a></li>
-                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="#">Reports</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('userDashboard') }}">Dashboard</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('userBookings') }}">Pengajuan</a></li>
+                        <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('userReturns') }}">Pengembalian</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="p-4 text-center">
-                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
+                </form>
             </div>
         </aside>
 

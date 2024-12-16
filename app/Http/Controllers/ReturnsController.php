@@ -3,72 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DepartmentModel;
-use App\Models\UserModel;
+use App\Models\ReturnsModel;
+use Illuminate\Support\Str;
+use App\Models\VehiclesModel;
 
-class DepartmentController extends Controller
+class ReturnsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        $departments = DepartmentModel::get();
-        return view('admin/content/department', compact('departments'));
+        $returns = ReturnsModel::with('user', 'booking', 'vehicle')->get();
+        return view('admin/content/returns', compact('returns'));
     }
 
-    public function getDepartmentById(Request $request){
-        $id = $request->id;
-        $department = DepartmentModel::find($id);
-        if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
-        }
-        return response()->json($department);
+    public function returnsByPerson(){
+        $returns = ReturnsModel::with('user', 'vehicle')->where('user_id', auth()->user()->id)->get();
+        return view('user/content/returns', compact('returns'));
     }
 
-    public function addDepartment(Request $request)
+    public function addReturns(Request $request)
     {
         $validate=$request->validate([
-            'name' => 'required',
-            'location' => 'required',
+            'vehicle' => 'required',
+            'return_date' => 'required',
+            'condition' => 'required',
+            'remarks' => 'required',
         ]);
 
-        DepartmentModel::create([
-            'name' => $validate['name'],
-            'location' => $validate['location'],
+        ReturnsModel::create([
+            'id' => Str::uuid(),
+            'user_id' => auth()->user()->id,
+            'vehicle_id' => $validate['vehicle'],
+            'return_date' => $validate['return_date'],
+            'condition' => $validate['condition'],
+            'remarks' => $validate['remarks'],
+        ]);
+
+        $vehicle = VehiclesModel::find($validate['vehicle']);
+        $vehicle->update([
+            'status' => 'available',
         ]);
 
         return response()->json(['message' => 'Departement telah berhasil ditambah'], 201);
-    }
-
-    public function editDepartment(Request $request)
-    {
-        $validate=$request->validate([
-            'id' => 'required',
-            'name' => 'required',
-            'location' => 'required',
-        ]);
-        $department = DepartmentModel::find($validate['id']);
-        if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
-        }
-        $department->update([
-            'name' => $validate['name'],
-            'location' => $validate['location'],
-        ]);
-
-        return response()->json(['message' => 'Departement telah berhasil diedit']);
-    }
-
-    public function deleteDepartmentById(Request $request)
-    {
-        $id = $request->id;
-        $Department = DepartmentModel::find($id);
-
-        if (!$Department) {
-            return response()->json(['message' => 'Department not found'], 404);
-        }
-
-        $Department->delete();
-
-        return response()->json(['message' => 'Department berhasil dihapus']);
     }
 
 }

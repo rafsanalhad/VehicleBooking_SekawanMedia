@@ -11,6 +11,7 @@ class VehiclesModel extends Model
 
     protected $table = 'vehicles';
     protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $fillable = [
         'type',
         'plate_number',
@@ -19,8 +20,6 @@ class VehiclesModel extends Model
         'ownership_type',
         'status',
         'fuel_consumtion',
-        'created_at',
-        'updated_at',
     ];
 
 }
