@@ -10,11 +10,12 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        return view('admin/content/dashboard');
+        $vehicles = VehiclesModel::get();
+        return view('admin/content/vehicle', compact('vehicles'));
     }
     public function getVehicles()
     {
-        $vehicles = VehiclesModel::get();
+        $vehicles = VehiclesModel::where('status', 'available')->get();
 
         return response()->json($vehicles);
     }
