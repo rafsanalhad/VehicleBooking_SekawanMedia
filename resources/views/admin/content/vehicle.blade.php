@@ -14,7 +14,7 @@
                 + Tambah Kendaraan
             </button>
         </div>
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse" id="kendaraanTable">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="text-left p-3 font-medium">No</th>
@@ -121,8 +121,30 @@
 </div>
 </main>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#kendaraanTable').DataTable({
+            responsive: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Data tidak ditemukan",
+                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                infoFiltered: "(Disaring dari _MAX_ total data)",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: "Selanjutnya",
+                    previous: "Sebelumnya",
+                },
+            },
+        });
+    });
+</script>
 
 <script>
+    $('#kendaraanNav').addClass("active");
     function openModal(id) {
         if(id == null){ 
         $('#type').val('');

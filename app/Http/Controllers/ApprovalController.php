@@ -26,7 +26,18 @@ class ApprovalController extends Controller
     }
     public function index()
     {
-        return view('approval/content/dashboard');
+        $usageData = BookingModel::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+        $months = $usageData->pluck('month');
+        $totals = $usageData->pluck('total');
+
+        $userTotal = UserModel::all()->count();
+        $kendaraanTotal = VehiclesModel::all()->count();
+        $kendaraanTersedia = VehiclesModel::where('status', 'available')->count();
+        $jumlahPengajuan = BookingModel::all()->count();
+        return view('approval/content/dashboard', compact('userTotal', 'kendaraanTotal', 'kendaraanTersedia', 'jumlahPengajuan', 'months', 'totals'));
     }
     public function approval()
     {
@@ -77,7 +88,7 @@ class ApprovalController extends Controller
                     'status' => 'approved_pending_1'
                 ]);
                 return response()->json(['message' => 'success']);
-            } else if($booking->status == 'approved_pending_1') {
+            } else if ($booking->status == 'approved_pending_1') {
                 $booking->update([
                     'status' => 'approved'
                 ]);
@@ -86,7 +97,7 @@ class ApprovalController extends Controller
                 ]);
                 return response()->json(['message' => 'success']);
             }
-        } else {    
+        } else {
             $booking->update([
                 'status' => 'rejected'
             ]);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\DepartmentModel;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Guid\Guid;
+use App\Models\VehiclesModel;
 use App\Models\BookingModel;
 
 class UserController extends Controller
@@ -23,7 +24,18 @@ class UserController extends Controller
     }
 
     public function userView(){
-        return view('user/content/dashboard');
+        $usageData = BookingModel::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+    $months = $usageData->pluck('month');
+    $totals = $usageData->pluck('total');
+
+    $userTotal = UserModel::all()->count();
+    $kendaraanTotal = VehiclesModel::all()->count();
+    $kendaraanTersedia = VehiclesModel::where('status', 'available')->count();
+    $jumlahPengajuan = BookingModel::all()->count();
+    return view('user/content/dashboard', compact('userTotal', 'kendaraanTotal', 'kendaraanTersedia', 'jumlahPengajuan', 'months', 'totals'));
     }
 
     public function getUserModal()

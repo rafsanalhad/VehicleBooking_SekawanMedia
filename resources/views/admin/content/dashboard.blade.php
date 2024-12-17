@@ -28,47 +28,15 @@
     <!-- Graph Placeholder -->
     <div class="bg-white p-6 rounded shadow">
         <h2 class="text-gray-700 font-bold mb-4">Grafik Pemakaian Kendaraan</h2>
-        <canvas id="vehicleUsageChart" class="h-48 w-full"></canvas>
-    </div>
-
-    <!-- Table -->
-    <div class="bg-white p-6 rounded shadow">
-        <h2 class="text-gray-700 font-bold mb-4">Recent Transactions</h2>
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="text-left p-3 font-medium">ID</th>
-                    <th class="text-left p-3 font-medium">Name</th>
-                    <th class="text-left p-3 font-medium">Amount</th>
-                    <th class="text-left p-3 font-medium">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border-t">
-                    <td class="p-3">#001</td>
-                    <td class="p-3">John Doe</td>
-                    <td class="p-3">$120</td>
-                    <td class="p-3 text-green-600">Completed</td>
-                </tr>
-                <tr class="border-t">
-                    <td class="p-3">#002</td>
-                    <td class="p-3">Jane Smith</td>
-                    <td class="p-3">$340</td>
-                    <td class="p-3 text-yellow-600">Pending</td>
-                </tr>
-                <tr class="border-t">
-                    <td class="p-3">#003</td>
-                    <td class="p-3">Alice Brown</td>
-                    <td class="p-3">$560</td>
-                    <td class="p-3 text-red-600">Failed</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="relative" style="height: 400px; width: 100%;">
+            <canvas id="vehicleUsageChart" class="h-auto w-full"></canvas>
+        </div>
     </div>
 </main>
 </div>
 </div>
 <script>
+    $('#dashboardNav').addClass("active");
     let months = @json($months);
     let totals = @json($totals);
     

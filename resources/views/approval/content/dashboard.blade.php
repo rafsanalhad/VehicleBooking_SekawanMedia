@@ -1,5 +1,5 @@
 @extends('template.approval.main')
-@section('page_title', 'Approval Dashboard')
+@section('page_title', 'Penerimaan Dashboard')
 
 @section('content')
 
@@ -8,69 +8,74 @@
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">Total Users</h2>
-            <p class="text-2xl font-semibold">1,234</p>
+            <h2 class="text-gray-700 font-bold">Total Karyawan</h2>
+            <p class="text-2xl font-semibold">{{ $userTotal }}</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">Revenue</h2>
-            <p class="text-2xl font-semibold">$12,345</p>
+            <h2 class="text-gray-700 font-bold">Jumlah Kendaraan</h2>
+            <p class="text-2xl font-semibold">{{ $kendaraanTotal }}</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">New Orders</h2>
-            <p class="text-2xl font-semibold">567</p>
+            <h2 class="text-gray-700 font-bold">Kendaraan Yang Tersedia</h2>
+            <p class="text-2xl font-semibold">{{ $kendaraanTersedia }}</p>
         </div>
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-gray-700 font-bold">Pending Tickets</h2>
-            <p class="text-2xl font-semibold">34</p>
+            <h2 class="text-gray-700 font-bold">Jumlah Pengajuan</h2>
+            <p class="text-2xl font-semibold">{{ $jumlahPengajuan }}</p>
         </div>
     </div>
 
     <!-- Graph Placeholder -->
     <div class="bg-white p-6 rounded shadow">
-        <h2 class="text-gray-700 font-bold mb-4">Sales Overview</h2>
-        <div class="h-48 bg-gray-100 flex items-center justify-center">
-            <span class="text-gray-500">Graph Placeholder</span>
+        <h2 class="text-gray-700 font-bold mb-4">Grafik Pemakaian Kendaraan</h2>
+        <div class="relative" style="height: 400px; width: 100%;">
+            <canvas id="vehicleUsageChart" class="h-auto w-full"></canvas>
         </div>
-    </div>
-
-    <!-- Table -->
-    <div class="bg-white p-6 rounded shadow">
-        <h2 class="text-gray-700 font-bold mb-4">Recent Transactions</h2>
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="text-left p-3 font-medium">ID</th>
-                    <th class="text-left p-3 font-medium">Name</th>
-                    <th class="text-left p-3 font-medium">Amount</th>
-                    <th class="text-left p-3 font-medium">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border-t">
-                    <td class="p-3">#001</td>
-                    <td class="p-3">John Doe</td>
-                    <td class="p-3">$120</td>
-                    <td class="p-3 text-green-600">Completed</td>
-                </tr>
-                <tr class="border-t">
-                    <td class="p-3">#002</td>
-                    <td class="p-3">Jane Smith</td>
-                    <td class="p-3">$340</td>
-                    <td class="p-3 text-yellow-600">Pending</td>
-                </tr>
-                <tr class="border-t">
-                    <td class="p-3">#003</td>
-                    <td class="p-3">Alice Brown</td>
-                    <td class="p-3">$560</td>
-                    <td class="p-3 text-red-600">Failed</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </main>
 </div>
 </div>
-</body>
-
-</html>
+<script>
+    $('#dashboardNav').addClass("active");
+    let months = @json($months);
+    let totals = @json($totals);
+    
+    const ctx = document.getElementById('vehicleUsageChart').getContext('2d');
+    const vehicleUsageChart = new Chart(ctx, {
+        type: 'line', // Bisa diubah ke 'bar', 'pie', dll
+        data: {
+            labels: @json($months), // Data bulan
+            datasets: [{
+                label: 'Jumlah Pemakaian Kendaraan',
+                data: @json($totals), // Data jumlah
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Bulan'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Jumlah Pemakaian'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 @endsection
