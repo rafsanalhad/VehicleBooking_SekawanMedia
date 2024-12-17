@@ -11,7 +11,7 @@
             <div class="">
                 <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
                     id="exportButton">
-                    Export to Excel
+                    Export ke Excel
                 </button>
                 <!-- Add Booking Button -->
                 <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none"
@@ -62,7 +62,7 @@
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 w-full h-full">
         <div class="bg-white rounded-lg w-96 p-6 space-y-4 shadow-lg">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold">Add New Booking</h3>
+                <h3 class="text-lg font-bold">Tambah Pengajuan Baru</h3>
                 <button class="text-gray-500 hover:text-red-600" onclick="closeModal()">&times;</button>
             </div>
             <form id="bookingForm" class="space-y-4">
@@ -119,9 +119,9 @@
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
-                        onclick="closeModal()">Cancel</button>
+                        onclick="closeModal()">Batal</button>
                     <button type="submit"
-                        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Save</button>
+                        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Simpan</button>
                 </div>
             </form>
         </div>
@@ -152,21 +152,21 @@
 </script>
 
 <script>
-    document.getElementById('exportButton').addEventListener('click', function () {
-    const table = document.querySelector("table");
-    const rows = Array.from(table.rows);
-    const data = rows.map(row => {
-        const cells = Array.from(row.cells);
-        return cells.map(cell => cell.textContent.trim());
+        document.getElementById('exportButton').addEventListener('click', function () {
+        const table = document.querySelector("table");
+        const rows = Array.from(table.rows);
+        const data = rows.map(row => {
+            const cells = Array.from(row.cells);
+            return cells.map(cell => cell.textContent.trim());
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet(data); 
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Bookings");
+
+        // Menyimpan file Excel
+        XLSX.writeFile(wb, "Bookings.xlsx");
     });
-
-    const ws = XLSX.utils.aoa_to_sheet(data); 
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Bookings");
-
-    // Menyimpan file Excel
-    XLSX.writeFile(wb, "Bookings.xlsx");
-});
     function openModal() {
     $.ajax({
         url: '{{ route('getUser') }}',

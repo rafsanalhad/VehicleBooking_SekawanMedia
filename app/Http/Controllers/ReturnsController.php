@@ -47,7 +47,7 @@ class ReturnsController extends Controller
             'status' => 'available',
         ]);
 
-        return response()->json(['message' => 'Departement telah berhasil ditambah'], 201);
+        return response()->json(['message' => 'Pengembalian telah berhasil'], 201);
     }
 
 }
