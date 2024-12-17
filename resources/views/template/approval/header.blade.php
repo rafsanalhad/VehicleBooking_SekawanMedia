@@ -82,7 +82,7 @@
                             </li>
                             <li>
                                 <a href="{{route('approval')}}" id="pengajuanNav" class="block p-4 hover:bg-gray-700 transition duration-300 flex items-center">
-                                    <i class="fa-solid fa-file-alt mr-2"></i> Menu Pengajuan
+                                    <i class="fa-solid fa-file-alt mr-2"></i> Menu Persetujuan
                                 </a>
                             </li>
                         </ul>
