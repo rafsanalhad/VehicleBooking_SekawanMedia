@@ -43,7 +43,7 @@ class AuthController extends Controller
         } else {
             return redirect()
                 ->back()
-                ->withErrors(['login' => 'Invalid email or password']);
+                ->withErrors(['login' => 'Email atau password salah']);
         }
     }
 
