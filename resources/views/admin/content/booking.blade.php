@@ -9,48 +9,49 @@
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-gray-700 font-bold">Pengajuan</h2>
             <div class="">
-                <!-- Add Booking Button -->
                 <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
-                    onclick="openModal()">
-                    + Add Booking
-                </button>
-    
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none" id="exportButton">
+                    id="exportButton">
                     Export to Excel
+                </button>
+                <!-- Add Booking Button -->
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none"
+                    onclick="openModal()">
+                    + Tambah Pengajuan
                 </button>
             </div>
         </div>
 
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="text-left p-3 font-medium">No</th>
-                    <th class="text-left p-3 font-medium">Yang Mengajukan</th>
-                    <th class="text-left p-3 font-medium">Kendaraan</th>
-                    <th class="text-left p-3 font-medium">Tanggal Mengajukan</th>
-                    <th class="text-left p-3 font-medium">Tanggal Mengembalikan</th>
-                    <th class="text-left p-3 font-medium">Yang Menyetujui 1</th>
-                    <th class="text-left p-3 font-medium">Yang Menyetujui 2</th>
-                    <th class="text-left p-3 font-medium">Status</th>
-                    {{-- <th class="text-left p-3 font-medium">Actions</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($bookings as $index => $booking)
-                <tr class="border-t">
-                    <td class="p-3">{{ $index + 1 }}</td>
-                    <td class="p-3">{{ $booking->user->name }}</td>
-                    <td class="p-3">{{ $booking->vehicles->model }}</td>
-                    <td class="p-3">{{ $booking->start_datetime }}</td>
-                    <td class="p-3">{{ $booking->end_datetime }}</td>
-                    @foreach($booking->approvals as $approval)
-                    <td class="p-3">{{ $approval->approver->name ?? 'Unknown' }}</td>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse" id="tableBooking">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="text-left p-3 font-medium">No</th>
+                        <th class="text-left p-3 font-medium">Yang Mengajukan</th>
+                        <th class="text-left p-3 font-medium">Kendaraan</th>
+                        <th class="text-left p-3 font-medium">Tanggal Mengajukan</th>
+                        <th class="text-left p-3 font-medium">Tanggal Mengembalikan</th>
+                        <th class="text-left p-3 font-medium">Yang Menyetujui 1</th>
+                        <th class="text-left p-3 font-medium">Yang Menyetujui 2</th>
+                        <th class="text-left p-3 font-medium">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($bookings as $index => $booking)
+                    <tr class="border-t">
+                        <td class="p-3">{{ $index + 1 }}</td>
+                        <td class="p-3">{{ $booking->user->name }}</td>
+                        <td class="p-3">{{ $booking->vehicles->model }}</td>
+                        <td class="p-3">{{ $booking->start_datetime }}</td>
+                        <td class="p-3">{{ $booking->end_datetime }}</td>
+                        @foreach($booking->approvals as $approval)
+                        <td class="p-3">{{ $approval->approver->name ?? 'Unknown' }}</td>
+                        @endforeach
+                        <td class="p-3 text-yellow-600">{{ $booking->status }}</td>
+                    </tr>
                     @endforeach
-                    <td class="p-3 text-yellow-600">{{ $booking->status }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Tambahkan jQuery CDN -->
@@ -127,23 +128,41 @@
     </div>
 </main>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#pengajuanNav').addClass("active");
+        $('#tableBooking').DataTable({
+            responsive: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Data tidak ditemukan",
+                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                infoFiltered: "(Disaring dari _MAX_ total data)",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: "Selanjutnya",
+                    previous: "Sebelumnya",
+                },
+            },
+        });
+    });
+</script>
 
 <script>
     document.getElementById('exportButton').addEventListener('click', function () {
-    // Ambil data tabel
     const table = document.querySelector("table");
     const rows = Array.from(table.rows);
-    
-    // Mengumpulkan data tabel dalam array
     const data = rows.map(row => {
         const cells = Array.from(row.cells);
         return cells.map(cell => cell.textContent.trim());
     });
 
-    // Menggunakan SheetJS untuk membuat file Excel
-    const ws = XLSX.utils.aoa_to_sheet(data);  // Convert array of arrays to sheet
-    const wb = XLSX.utils.book_new();  // Create a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Bookings");  // Append sheet to workbook
+    const ws = XLSX.utils.aoa_to_sheet(data); 
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Bookings");
 
     // Menyimpan file Excel
     XLSX.writeFile(wb, "Bookings.xlsx");

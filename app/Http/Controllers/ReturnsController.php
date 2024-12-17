@@ -15,7 +15,7 @@ class ReturnsController extends Controller
     }
     public function index()
     {
-        $returns = ReturnsModel::with('user', 'booking', 'vehicle')->get();
+        $returns = ReturnsModel::with('user', 'vehicle')->get();
         return view('admin/content/returns', compact('returns'));
     }
 

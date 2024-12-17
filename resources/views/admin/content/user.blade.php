@@ -8,13 +8,18 @@
     <div class="bg-white p-6 rounded shadow">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-gray-700 font-bold">Karyawan / Pengguna</h2>
-            <!-- Add Booking Button -->
-            <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none"
-                onclick="openModal(null)">
-                + Tambah Karyawan
-            </button>
+            <div class="">
+                <!-- Add Booking Button -->
+                <button class="bg-green-600 text-white px-6 py-2 rounded-md shadow hover:bg-green-700 focus:outline-none" id="exportButton">
+                    Export to Excel
+                </button>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 focus:outline-none"
+                    onclick="openModal(null)">
+                    + Tambah Karyawan
+                </button>
+            </div>
         </div>
-        <table class="w-full border-collapse">
+        <table id="userTable" class="w-full border-collapse">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="text-left p-3 font-medium">No</th>
@@ -47,7 +52,6 @@
         </table>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Modal -->
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 w-full h-full">
@@ -99,6 +103,44 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('#userTable').DataTable({
+            responsive: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Data tidak ditemukan",
+                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                infoFiltered: "(Disaring dari _MAX_ total data)",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: "Selanjutnya",
+                    previous: "Sebelumnya",
+                },
+            },
+        });
+    });
+</script>
+
+<script>
+        $('#penggunaNav').addClass("active");
+     document.getElementById('exportButton').addEventListener('click', function () {
+    const table = document.querySelector("table");
+    const rows = Array.from(table.rows);
+    
+    const data = rows.map(row => {
+        const cells = Array.from(row.cells);
+        return cells.map(cell => cell.textContent.trim());
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(data); 
+    const wb = XLSX.utils.book_new(); 
+    XLSX.utils.book_append_sheet(wb, ws, "Bookings");
+
+    XLSX.writeFile(wb, "Bookings.xlsx");
+});
     function openModal(id) {
         if(id == null){
             

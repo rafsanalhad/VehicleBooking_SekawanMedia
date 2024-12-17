@@ -16,7 +16,7 @@
             <p class="text-yellow-500">Note: anda harus menghubungi admin untuk pengajuan kendaraan</p>
         </div>
 
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse" id="tablePengajuan">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="text-left p-3 font-medium">No</th>
@@ -50,4 +50,26 @@
 
     <!-- Tambahkan jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#pengajuanNav').addClass("active");
+            $('#tablePengajuan').DataTable({
+                responsive: true,
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ data per halaman",
+                    zeroRecords: "Data tidak ditemukan",
+                    info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                    infoEmpty: "Tidak ada data",
+                    infoFiltered: "(Disaring dari _MAX_ total data)",
+                    paginate: {
+                        first: "Pertama",
+                        last: "Terakhir",
+                        next: "Selanjutnya",
+                        previous: "Sebelumnya",
+                    },
+                },
+            });
+        });
+    </script>
 @endsection

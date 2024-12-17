@@ -43,7 +43,7 @@ class AdminController extends Controller
     public function getAllApproval()
     {
         $approvals = ApprovalModel::with(['booking', 'approver'])->get();
-
+  
         return view('admin/content/approval', compact('approvals'));
     }
     public function getApproverModal()

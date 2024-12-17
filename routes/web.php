@@ -25,8 +25,6 @@ Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
 
 Route::get('/login', [AuthController::class, 'loginView'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/signup', [AuthController::class, 'signUpView'])->name('signUpView');
-Route::post('/signup', [AuthController::class, 'signUp'])->name('signUp');
 Route::get('/getUser', [UserController::class, 'getUserModal'])->name('getUser');
 Route::get('/getApprover', [ApprovalController::class, 'getApproverModal'])->name('getApprover');
 Route::get('/getApproverAdmin', [AdminController::class, 'getApproverModal'])->name('getApprovalAdmin');

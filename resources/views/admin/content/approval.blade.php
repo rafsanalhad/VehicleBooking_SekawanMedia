@@ -7,7 +7,7 @@
     <!-- History Booking -->
     <div class="bg-white p-6 rounded shadow">
         <h2 class="text-gray-700 font-bold mb-4">History Booking</h2>
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse" id="menyetujuiTable">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="text-left p-3 font-medium">No</th>
@@ -41,5 +41,29 @@
         </table>
     </div>
 </main>
+<script>
+        $('#menyetujuiNav').addClass("active");
+</script>
+<script>
+    $(document).ready(function () {
+        $('#menyetujuiTable').DataTable({
+            responsive: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Data tidak ditemukan",
+                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                infoEmpty: "Tidak ada data",
+                infoFiltered: "(Disaring dari _MAX_ total data)",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: "Selanjutnya",
+                    previous: "Sebelumnya",
+                },
+            },
+        });
+    });
+</script>
 
 @endsection
