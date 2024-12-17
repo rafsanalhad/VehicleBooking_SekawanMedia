@@ -83,9 +83,9 @@
             </div>
             <div class="flex justify-end space-x-4">
                 <button type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
-                    onclick="closeModal()">Cancel</button>
+                    onclick="closeModal()">Kembali</button>
                 <button type="submit"
-                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Save</button>
+                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Simpan</button>
             </div>
         </form>
     </div>

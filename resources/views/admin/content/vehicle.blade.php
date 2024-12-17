@@ -62,7 +62,7 @@
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 w-full h-full">
     <div class="bg-white rounded-lg w-96 p-6 space-y-4 shadow-lg">
         <div class="flex justify-between items-center">
-            <h3 class="text-lg font-bold">Tambah Pengguna Baru</h3>
+            <h3 class="text-lg font-bold" id="modalTitle"></h3>
             <button class="text-gray-500 hover:text-red-600" onclick="closeModal()">&times;</button>
         </div>
         <form id="vehicleForm" class="space-y-4">
@@ -147,6 +147,7 @@
     $('#kendaraanNav').addClass("active");
     function openModal(id) {
         if(id == null){ 
+        $('#modalTitle').text('Tambah Kendaraan');
         $('#type').val('');
         $('#no_plat').val('');
         $('#model').val('');
@@ -155,6 +156,7 @@
         $('#status').val('');
         $('#modal').removeClass('hidden');
         }else{
+            $('#modalTitle').text('Edit Kendaraan');
             $.ajax({
                 url: '{{ route('getVehicleById') }}',
                 method: 'POST',
