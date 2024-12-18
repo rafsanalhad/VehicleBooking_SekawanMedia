@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
                 'id' => Guid::uuid4()->toString(),
                 'name' => 'Supardi',
                 'email' => 'supardi@gmail.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('supardi'),
                 'role' => 'user',
                 'department_id' => 3,
                 'status' => 'active',
